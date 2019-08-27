@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+}
+
+th {
+    width: 33%;
+}
+
+.myBox {
+    width: 20%;
+    margin: auto;
+}
+
+.remove {
+    color: red;
+    font-weight: bold; 
+}
+
+.remove:hover {
+    cursor: pointer;
+}
