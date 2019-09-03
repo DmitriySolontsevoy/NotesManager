@@ -1,5 +1,4 @@
-document.getElementById("send").onclick = function()
-{
+document.getElementById("send").onclick = () => {
     document.getElementById("title").style.borderColor = "black";
     document.getElementById("content").style.borderColor = "black";
 
@@ -9,6 +8,8 @@ document.getElementById("send").onclick = function()
     if (title != "" && content != "")
     {
         appendNewRow(title, content);
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
     }
     else
     {
@@ -24,14 +25,12 @@ document.getElementById("send").onclick = function()
     }
 }
 
-document.body.onload = function()
-{
+document.body.onload = () => {
     let notes = JSON.parse(window.localStorage.getItem("notes"));
     fillNotesList(notes);
 }
 
-document.body.onunload = function()
-{
+document.body.onunload = () => {
     let notesJson = prepareNotes();
     window.localStorage.setItem("notes", notesJson);
 }
