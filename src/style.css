@@ -2,6 +2,10 @@ body {
     text-align: center;
 }
 
+table {
+    table-layout: fixed;
+}
+
 th {
     width: 33%;
 }
@@ -19,3 +23,21 @@ th {
 .remove:hover {
     cursor: pointer;
 }
+
+#header {
+    width: 100%;
+    font-size: 60px;
+    padding: 1.5%;
+    background-color: #345678;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    word-wrap: break-word;
+}
+
+h1 {
+    font-weight: bolder;
+}
+

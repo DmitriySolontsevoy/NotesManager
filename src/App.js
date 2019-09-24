@@ -2,16 +2,19 @@ import React, {Component} from 'react';
 import './bootstrap.min.css';
 import './style.css';
 
+let users = [];
+let currentUser = "";
+
 class App extends Component {
 
-    helpMe() {
-        document.getElementById("title").style.borderColor = "black";
-        document.getElementById("content").style.borderColor = "black";
+    addButton() {
+        document.getElementById("title").style.borderColor = "lightgrey";
+        document.getElementById("content").style.borderColor = "lightgrey";
 
-        let title = document.getElementById("title").value;
-        let content = document.getElementById("content").value;
+        let title = document.getElementById("title").value.trim();
+        let content = document.getElementById("content").value.trim();
 
-        if (title != "" && content != "")
+        if (title !== "" && content !== "")
         {
             appendNewRow(title, content);
             document.getElementById("title").value = "";
@@ -19,52 +22,155 @@ class App extends Component {
         }
         else
         {
-            if (title == "")
+            if (title === "")
             {
                 document.getElementById("title").style.borderColor = "red";
             }
         
-            if (content == "")
+            if (content === "")
             {
                 document.getElementById("content").style.borderColor = "red";
             }
         }
     }
 
-    
-    
-    componentDidMount() {
-        let notes = JSON.parse(window.localStorage.getItem("notes"));
-        fillNotesList(notes);
+    register() {
+        document.getElementById("regLogin").style.borderColor = "lightgrey";
+        document.getElementById("regPassword").style.borderColor = "lightgrey";
+        document.getElementById("regRepeatPassword").style.borderColor = "lightgrey";
+
+	let login = document.getElementById("regLogin").value.trim();
+	let password = document.getElementById("regPassword").value.trim();
+	let repeatPassword = document.getElementById("regRepeatPassword").value.trim();
+
+	if (login !== "" && password !== "" && repeatPassword !== "")
+        {
+	    if (password === repeatPassword) 
+	    {
+		addUser(login, password);
+		document.getElementById("regLogin").value = "";
+                document.getElementById("regPassword").value = "";
+	        document.getElementById("regRepeatPassword").value = "";
+	    }
+	    else
+	    {
+		document.getElementById("regPassword").style.borderColor = "red";
+		document.getElementById("regRepeatPassword").style.borderColor = "red";
+	    }
+        }
+        else
+        {
+            if (login === "")
+            {
+                document.getElementById("regLogin").style.borderColor = "red";
+            }
+        
+            if (password === "")
+            {
+                document.getElementById("regPassword").style.borderColor = "red";
+            }
+
+	    if (repeatPassword === "")
+	    {
+		document.getElementById("regRepeatPassword").style.borderColor = "red";
+	    }
+        }
     }
 
-    componentWillUnmount() {
-        let notesJson = prepareNotes();
-        window.localStorage.setItem("notes", notesJson);
+
+
+    login() {
+	document.getElementById("logLogin").style.borderColor = "lightgrey";
+        document.getElementById("logPassword").style.borderColor = "lightgrey";
+
+	let login = document.getElementById("logLogin").value.trim();
+	let password = document.getElementById("logPassword").value.trim();
+
+	if (login !== "" && password !== "")
+        {
+	    selectUser(login, password);
+	    document.getElementById("logLogin").value = "";
+	    document.getElementById("logPassword").value = "";
+        }
+        else
+        {
+            if (login === "")
+            {
+                document.getElementById("logLogin").style.borderColor = "red";
+            }
+        
+            if (password === "")
+            {
+                document.getElementById("logPassword").style.borderColor = "red";
+            }
+        }
+    }
+
+    componentDidMount() {	
+        let notes = JSON.parse(window.localStorage.getItem("notes"));
+        fillNotesList(notes);
     }
 
     render() {
         return (
             <>
-                <br />
+		<div id="header">NOTES MANAGER</div>
+
+                <br /><br />
+
+		<div className="myBox">
+                    <form>
+                        <div className="form-group">
+                            <label>Login</label>
+                            <input maxLength="40" type="text" className="form-control" id="regLogin" placeholder="Enter login" />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input maxLength="80" type="password" className="form-control" id="regPassword" placeholder="Enter desirable password" />
+                        </div>
+			<div className="form-group">
+                            <label>Repeat password</label>
+                            <input maxLength="80" type="password" className="form-control" id="regRepeatPassword" placeholder="Repeat password" />
+                        </div>
+                        <button type="button" className="btn btn-primary" onClick={this.register}>Register</button>
+                    </form>
+                </div>
+
+		<br /><hr /><br />
+
+		<div className="myBox">
+                    <form>
+                        <div className="form-group">
+                            <label>Login</label>
+                            <input maxLength="30" type="text" className="form-control" id="logLogin" placeholder="Enter your login" />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input maxLength="400" type="password" className="form-control" id="logPassword" placeholder="Enter your password" />
+                        </div>
+                        <button type="button" className="btn btn-primary" onClick={this.login}>Login</button>
+                    </form>
+                </div>
+
+		<br /><hr /><br />
+
                 <div className="myBox">
                     <form>
                         <div className="form-group">
-                            <label>Note title</label>
-                            <input type="text" className="form-control" id="title" placeholder="Enter note title" />
+                            <label>Title</label>
+                            <input maxLength="30" type="text" className="form-control" id="title" placeholder="Enter note title" />
                         </div>
                         <div className="form-group">
-                            <label>Note content</label>
-                            <input type="text" className="form-control" id="content" placeholder="Enter note content" />
+                            <label>Content</label>
+                            <input maxLength="400" type="text" className="form-control" id="content" placeholder="Enter note content" />
                         </div>
-                        <br />
-                        <button type="button" className="btn btn-primary" onClick={this.helpMe}>Add</button>
+                        <button type="button" className="btn btn-primary" onClick={this.addButton}>Add</button>
                     </form>
                 </div>
     
-                <br />
+                <br /><br />
     
-                <h1>ALL NOTES</h1>
+                <h1>NOTES LIST</h1>
     
                 <table className="table">
                     <thead>
@@ -74,15 +180,20 @@ class App extends Component {
                             <th>Remove</th>
                         </tr>
                     </thead>
-                <tbody>
+                    <tbody>
     
-                </tbody>
+    	            </tbody>
                 </table>
     
                 <script src="js/script.js"></script>
             </>
         );
     }
+}
+
+document.body.onunload = () => {
+    let notesJson = prepareNotes();
+    window.localStorage.setItem("notes", notesJson);
 }
 
 function appendNewRow(title, content) {
@@ -125,6 +236,27 @@ function fillNotesList(notes)
     for (let i = 0; i < notes.length; i++)
     {
         appendNewRow(notes[i].title, notes[i].content);
+    }
+}
+
+function addUser(login, password)
+{
+    users.push({"login": login, "password": password});
+    console.log(users);
+}
+
+function selectUser(login, password)
+{
+    let user = users.filter(data => (data.login === login));    
+
+    if (user.length > 0 && user[0].password === password)
+    {
+	currentUser = login;
+        document.getElementById("header").innerText = currentUser;
+    }
+    else
+    {
+	document.getElementById("logLogin").style.borderColor = "red";
     }
 }
 
