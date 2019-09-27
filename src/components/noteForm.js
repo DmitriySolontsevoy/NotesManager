@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../bootstrap.min.css';
-import '../style.css';
+import '../css/style.css';
+import NoteList from './noteList.js';
 
 class NoteForm extends Component {
 
@@ -75,6 +76,7 @@ class NoteForm extends Component {
     render() {
 	return (
 	    <>
+		<br /><br />
 	        <div className="myBox">
                     <form>
                         <div className="form-group">
@@ -88,6 +90,8 @@ class NoteForm extends Component {
                         <button type="button" className="btn btn-primary" onClick={this.addNote}>Add</button>
                     </form>
                 </div>
+
+		<NoteList />
 	    </>
 	)
     }

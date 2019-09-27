@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import '../bootstrap.min.css';
-import '../style.css';
+import '../css/style.css';
 
 class NoteList extends Component {
 
     render() {
 	return (
 	    <>
+		<br /><br />
 	        <h1>NOTES LIST</h1>
     
                 <table className="table">

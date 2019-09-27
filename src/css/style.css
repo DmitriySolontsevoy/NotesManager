@@ -27,10 +27,25 @@ th {
 #header {
     width: 100%;
     font-size: 60px;
-    padding: 1.5%;
     background-color: #345678;
     color: white;
     font-weight: bold;
+}
+
+#leftSwitch, #rightSwitch {
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+    width: 5%;
+}
+
+#headerTitle {
+    display: inline-block;
+    width: 90%;
+}
+
+#leftSwitch:hover, #rightSwitch:hover {
+    background-color: #56789a;
 }
 
 td {

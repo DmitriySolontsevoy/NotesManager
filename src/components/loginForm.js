@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../bootstrap.min.css';
-import '../style.css';
+import '../css/style.css';
 
 const md5 = require('js-md5');
 
@@ -40,10 +40,8 @@ class LoginForm extends Component {
 
 	if (user.length > 0 && user[0].password === md5(password))
 	{
-	    this.props.dataFromParent.currentUser = user[0].id;
-	    document.getElementById("header").innerText = login;
-	    document.getElementById("header").appendChild(document.createTextNode("	logout"));
-	    document.getElementById("header").onclick = this.logout;
+	    document.getElementById("headerTitle").onclick = this.logout;
+	    this.props.dataFromParent.currentUser = login;
 	}
 	else
 	{
@@ -55,7 +53,6 @@ class LoginForm extends Component {
 
     logout = () => {
 	this.props.dataFromParent.currentUser = "";
-	document.getElementById("header").innerText = "NOTES MANAGER";
 	this.sendData();
     }
 
@@ -63,6 +60,7 @@ class LoginForm extends Component {
     {
         return (
 	    <>
+		<br /><br />
 		<div className="myBox">
                     <form>
                         <div className="form-group">
